@@ -26,25 +26,39 @@ class App extends Component {
       .catch(err => {
         console.log(err)
       }); 
-      // this.showWorker();
-      
-      
   }
 
+  submit(e){
+    e.preventDefault();
+    const workerId = e.target.workerId.value;
+    let allOrders = this.state.ordersData.orders;
+    const filteredOrders = allOrders.filter(order => order.workerId ==  workerId);
+    filteredOrders.map((order) => (
+      <Order 
+      key = {order.id} 
+      orderName = {order.name}
+      description = {order.description} 
+      workerId = {order.workerId}
+      deadline = {order.deadline}
+      /> 
+    ))
+  
 
+}
   render() {
     let allOrders = this.state.ordersData.orders;
     console.log(allOrders);
- 
+    
     return (
       <div>
         
         <div>
-        <Form />
+        <Form allProps = {this.submit}/>
           </div>  
         <div className = 'main-wrapper'> 
           {allOrders.map((order) => (
-              <Order key = {order.id} 
+              <Order allProps = {this.state.allOrders}
+              key = {order.id} 
               orderName = {order.name}
               description = {order.description} 
               workerId = {order.workerId}
@@ -52,6 +66,7 @@ class App extends Component {
               /> 
             ))
           }            
+      
           </div>
         </div>  
         )

@@ -23,14 +23,16 @@ componentDidMount() {
         .catch(err => {
           console.log(err)
         });  
+    }
 
-}
+   
+    
 
     render()
     
     {
         let workerId = this.props.workerId;
-    console.log(workerId);
+        console.log(workerId);
 
         return(
             
