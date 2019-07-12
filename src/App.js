@@ -11,6 +11,10 @@ class App extends Component {
     ordersData: {orders:[]},
    
 }
+constructor(props) {
+  super(props);
+  this.submit = this.submit.bind(this);
+} 
 
   // fetch for the first time page loads
   componentDidMount() {
@@ -33,7 +37,9 @@ class App extends Component {
     const workerId = e.target.workerId.value;
     console.log(workerId);
     let allOrders = this.state.ordersData.orders;
+    console.log(allOrders);
     const filteredOrders = allOrders.filter(order => order.workerId ==  workerId);
+    console.log(filteredOrders)
     filteredOrders.map((order) => (
       <Order 
       key = {order.id} 
@@ -43,9 +49,8 @@ class App extends Component {
       deadline = {order.deadline}
       /> 
     ))
-  
-
 }
+
   render() {
     let allOrders = this.state.ordersData.orders;
     console.log(allOrders);
@@ -54,7 +59,7 @@ class App extends Component {
       <div>
         
         <div>
-        <Form submit = {this.submit}/>
+        <Form submit = {this.submit} allOrders = {this.state.ordersData.orders}/>
           </div>  
         <div className = 'main-wrapper'> 
           {allOrders.map((order) => (
