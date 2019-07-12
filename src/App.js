@@ -31,6 +31,7 @@ class App extends Component {
   submit(e){
     e.preventDefault();
     const workerId = e.target.workerId.value;
+    console.log(workerId);
     let allOrders = this.state.ordersData.orders;
     const filteredOrders = allOrders.filter(order => order.workerId ==  workerId);
     filteredOrders.map((order) => (
@@ -53,11 +54,11 @@ class App extends Component {
       <div>
         
         <div>
-        <Form allProps = {this.submit}/>
+        <Form submit = {this.submit}/>
           </div>  
         <div className = 'main-wrapper'> 
           {allOrders.map((order) => (
-              <Order allProps = {this.state.allOrders}
+              <Order 
               key = {order.id} 
               orderName = {order.name}
               description = {order.description} 
