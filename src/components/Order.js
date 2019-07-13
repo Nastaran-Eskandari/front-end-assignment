@@ -6,9 +6,13 @@ import '../App.css'
 
 
 class Order extends Component {
-state={
-    workersData :{worker:[]}
-}
+
+constructor(props) {
+    super(props);
+    this.state={
+        workersData :{worker:[]}
+    }
+  } 
 
 componentDidMount() {
     let workerId = this.props.workerId;
@@ -22,15 +26,20 @@ componentDidMount() {
         })
         .catch(err => {
           console.log(err)
-        });  
+        });
     }
 
-   
-    
+        filterState = (workerName)=>{
+            let workerId = this.state.workersData.workerId;
+            console.log(workerId);
+            this.setState(prevState=>{
+                const newWorkersData = prevState.workersData.filter(worker => worker.workerName ===  parseInt(workerName))
+                return {ordersData : newWorkersData}
+            })
+        }
 
-    render()
-    
-    {
+    render(){
+
         let workerId = this.props.workerId;
         console.log(workerId);
 

@@ -4,16 +4,13 @@ import Form from './components/Form'
 import './App.css';
 
 
-
 class App extends Component {
-  
-  state = {
-    ordersData: {orders:[]},
-   
-}
+
 constructor(props) {
   super(props);
-  this.submit = this.submit.bind(this);
+  this.state={
+    ordersData: []
+  }
 } 
 
   // fetch for the first time page loads
@@ -23,53 +20,41 @@ constructor(props) {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          ordersData: data,
+          ordersData: data.orders
           });
-          console.log(this.state.ordersData.orders);
         })
       .catch(err => {
         console.log(err)
       }); 
   }
 
-  submit(e){
-    e.preventDefault();
-    const workerId = e.target.workerId.value;
-    console.log(workerId);
-    let allOrders = this.state.ordersData.orders;
-    console.log(allOrders);
-    const filteredOrders = allOrders.filter(order => order.workerId ==  workerId);
-    console.log(filteredOrders)
-    filteredOrders.map((order) => (
-      <Order 
-      key = {order.id} 
-      orderName = {order.name}
-      description = {order.description} 
-      workerId = {order.workerId}
-      deadline = {order.deadline}
-      /> 
-    ))
+
+  filterState = (workerId)=>{
+
+    this.setState(prevState=>{
+        const newOrdersData = prevState.ordersData.filter(order => order.workerId ===  parseInt(workerId))
+        return {ordersData:newOrdersData}
+    })
 }
 
   render() {
-    let allOrders = this.state.ordersData.orders;
-    console.log(allOrders);
+    let allOrders = this.state.ordersData;
     
     return (
       <div>
         
         <div>
-        <Form submit = {this.submit} allOrders = {this.state.ordersData.orders}/>
+        <Form handleFilter={this.filterState}/>
           </div>  
         <div className = 'main-wrapper'> 
-          {allOrders.map((order) => (
+          { allOrders.map((order) => (
               <Order 
               key = {order.id} 
               orderName = {order.name}
               description = {order.description} 
               workerId = {order.workerId}
               deadline = {order.deadline}
-              /> 
+              />
             ))
           }            
       
